@@ -61,17 +61,13 @@ echo $'\n'
 echo 'Erstelle ~/.config'
 echo $'\n'
 
-DIR="~/.config/"
-if [ -d "$DIR" ]; then
-  ### Take action if $DIR exists ###
-  echo "Der Ordner ${DIR} exestiert bereits..."
-else
-  ###  Control will jump here if $DIR does NOT exists ###
-  mkdir ${DIR}
-  exit 1
-fi
+#### Check for ~/.config/, if not found create it using the mkdir ####
 
-
+dldir="~/.config/"
+ 
+[ ! -d "$dldir" ] && mkdir -p "$dldir"
+ 
+ 
 
 #### Kopiere tmux.conf ####
 
@@ -81,15 +77,11 @@ echo $'\n'
 echo 'Erstelle ~/Scripts'
 echo $'\n'
 
-DIR="~/Scripts"
-if [ -d "$DIR" ]; then
-  ### Take action if $DIR exists ###
-  echo "Der Ordner ${DIR} exestiert bereits..."
-else
-  ###  Control will jump here if $DIR does NOT exists ###
-  mkdir ${DIR}
-  exit 1
-fi
+#### Check for ~/Scripts/, if not found create it using the mkdir ####
+
+oldir="~/Scripts/"
+ 
+[ ! -d "$oldir" ] && mkdir -p "$oldir"
 
 cp -r $absolutepath/Scripts/tmux/tmux.conf ~/.tmux.conf
 
