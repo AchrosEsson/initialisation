@@ -13,9 +13,9 @@ echo $'\n'
 
 git clone https://github.com/maestrogerardo/i3-gaps-deb.git
 
-absolutepath="$(cd "$(dirname "$1")"; pwd -P)/$(basename "$1")"
+absolutepath1="$(cd "$(dirname "$1")"; pwd -P)/$(basename "$1")"
 
-cd $absolutepath/i3-gaps-deb
+cd $absolutepath1/i3-gaps-deb
 
 (. ./i3-gaps-deb)
 
@@ -74,14 +74,14 @@ echo $'\n'
 echo 'installiere Powerline Fonts'
 echo $'\n'
 git clone https://github.com/powerline/fonts.git
-cd $absolutepath/fonts
+cd $absolutepath1/fonts
 (. ./install.sh)
 
 echo $'\n'
 echo 'Kopiere i3-config...'
 echo $'\n'
 mkdir ~/.config/i3/
-cp -r $absolutepath/Scripts/i3/config ~/.config/i3/config
+cp -r $absolutepath1/Scripts/i3/config ~/.config/i3/config
 
 sleep 2
 
@@ -89,7 +89,7 @@ echo $'\n'
 echo 'Kopiere polybar-config...'
 echo $'\n'
 mkdir ~/.config/polybar/
-cp -r $absolutepath/Scripts/i3/polybar-config ~/.config/polybar/config
+cp -r $absolutepath1/Scripts/i3/polybar-config ~/.config/polybar/config
 
 sleep 2
 
@@ -97,7 +97,7 @@ echo $'\n'
 echo 'Kopiere rofi-config...'
 echo $'\n'
 mkdir ~/.config/rofi/
-cp -r $absolutepath/Scripts/rofi/config.rasi ~/.config/rofi/config.rasi
+cp -r $absolutepath1/Scripts/rofi/config.rasi ~/.config/rofi/config.rasi
 
 sleep 2
 
