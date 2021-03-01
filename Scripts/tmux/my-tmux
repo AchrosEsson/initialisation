@@ -1,0 +1,94 @@
+#session1
+
+tmux new-session -d -s localhost
+
+tmux neww  -t localhost
+tmux rename-window -t localhost:1 'Main'
+
+tmux neww -t localhost
+tmux rename-window -t localhost:2 'Ranger'
+tmux send-keys -t localhost:2 'ranger' C-m 
+
+tmux neww -t localhost
+tmux rename-window -t localhost:3 'Other'
+
+tmux neww -t localhost
+tmux rename-window -t localhost:4 'Radio'
+tmux send-keys -t localhost:4 '1live'
+
+tmux neww -t localhost
+tmux rename-window -t localhost:5 'Htop'
+tmux send-keys -t localhost:5 'htop' C-m
+
+
+#session2
+
+tmux new-session -d -s network
+
+tmux neww -t network
+tmux rename-window -t network:1 ' QNAP                              192.168.178.100'
+tmux send-keys -t network:1 'ssh admin@192.168.178.100'
+
+tmux neww -t network
+tmux rename-window -t network:2 ' Proxmox | Host                    192.168.178.120'
+tmux send-keys -t network:2 'ssh root@proxmox.local'
+
+tmux neww -t network
+tmux rename-window -t network:3 ' Proxmox | Docker-CT               192.168.178.122'
+tmux send-keys -t network:3 'ssh root@docker.local'
+
+tmux neww -t network
+tmux rename-window -t network:4 ' Proxmox | Nextcloud-CT            192.168.178.123'
+tmux send-keys -t network:4 'ssh root@nextcloud.local'
+
+tmux neww -t network
+tmux rename-window -t network:5 ' Proxmox | Pi-hole-VM              192.168.178.124'
+tmux send-keys -t network:5 'ssh user@pihole.local'
+
+tmux neww -t network
+tmux rename-window -t network:6 ' Proxmox | Media-Download-CT       192.168.178.127'
+tmux send-keys -t network:6 'ssh root@mediadownload.local'
+
+tmux neww -t network
+tmux rename-window -t network:7 ' Proxmox | Proxy-Server-CT         192.168.178.130'
+tmux send-keys -t network:7 'ssh root@proxyserver.local'
+
+tmux neww -t network
+tmux rename-window -t network:8 ' Proxmox | Folding@home-CT         192.168.178.131'
+tmux send-keys -t network:8 'ssh root@nextcloud.local'
+
+tmux neww -t network
+tmux rename-window -t network:9 ' Proxmox | Home-Assistant-VM       192.168.178.128'
+tmux send-keys -t network:9 'ssh user@ubuntuservervmsnap.local'
+
+tmux neww -t network
+tmux rename-window -t network:10 'Proxmox | Testing-Environment     192.168.178.101'
+tmux send-keys -t network:10 'ssh user@testingenv.local'
+
+tmux neww -t network
+tmux rename-window -t network:11 'Proxmox | Cloudron-VM             192.168.178.140'
+tmux send-keys -t network:11 'ssh user@cloudron.local'
+
+
+
+
+#session3
+
+tmux new-session -d -s remote
+
+
+
+tmux neww -t remote
+tmux rename-window -t remote:1 'remote-1 | Nothberg - RaspberryPi     nothberg.myddns.me'
+tmux send-keys -t remote:1 'ssh pi@nothberg.myddns.me'
+
+tmux neww -t remote
+tmux rename-window -t remote:2 'remote-2'
+
+tmux neww -t remote
+tmux rename-window -t remote:3 'remote-3'
+
+tmux rename-window -t remote:4 'Other'
+
+tmux attach-session -d -t localhost:1
+
