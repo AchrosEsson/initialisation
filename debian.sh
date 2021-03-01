@@ -51,7 +51,7 @@ absolutepath="$(cd "$(dirname "$1")"; pwd -P)/$(basename "$1")"
 
 #### Rufe software.sh auf ####
 
-(. .$absolutepath/Scripts/Debian/software.sh)
+(. .$absolutepath'Scripts/Debian/software.sh')
 
 
 
