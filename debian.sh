@@ -51,7 +51,7 @@ absolutepath="$(cd "$(dirname "$1")"; pwd -P)/$(basename "$1")"
 
 #### Rufe software.sh auf ####
 
-(. .$absolutepath/Scripts/Debian/software.sh)
+(. .$absolutepathScripts/Debian/software.sh)
 
 
 
@@ -104,7 +104,7 @@ echo 'Kopiere Z-Shell-Konfiguration'
 echo $'\n'
 sleep 2
 
-cp -r $absolutepath/Scripts/zsh/zshrc ~/.zshrc 
+cp -r $absolutepathScripts/zsh/zshrc ~/.zshrc 
 
 sleep 2
 
@@ -117,7 +117,7 @@ echo 'Kopiere Polybar Konfiguarion'
 echo $'\n'
 sleep 2
 
-cp -r $absolutepath/Scripts/polybar/shades ~/.config/
+cp -r $absolutepathScripts/polybar/shades ~/.config/
 
 sleep 2
 
@@ -158,7 +158,7 @@ echo "Möchtest du i3 Window Manager installieren?"
 echo $'\n'
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) (. .$absolutepath/Scripts/i3/i3wm.sh); break;;
+        Yes ) (. .$absolutepathScripts/i3/i3wm.sh); break;;
         No ) break;;
     esac
 done
@@ -172,7 +172,7 @@ echo "Möchtest du eine Backup-location bestimmen?"
 echo $'\n'
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) (. .$absolutepath/Scripts/main/backup.sh); break;;
+        Yes ) (. .$absolutepathScripts/main/backup.sh); break;;
         No ) break;;
     esac
 done
