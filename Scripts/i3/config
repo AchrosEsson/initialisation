@@ -237,7 +237,7 @@ assign [class="(?i)xfce4-terminal"]     		        $ws1
 assign [class="(?i)chromium"]           		        $ws2
 assign [class="(?i)code"]               		        $ws3
 
-############## open apps on startup### ############
+############## open apps on startup ###############
 
 exec xfce4-terminal
 exec chromium
