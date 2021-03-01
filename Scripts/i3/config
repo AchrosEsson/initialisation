@@ -47,7 +47,7 @@ bindsym $mod+Return exec xfce4-terminal
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id rofi -show run
+bindsym $mod+d exec --no-startup-id rofi -show drun
 
 bindsym $mod+space exec --no-startup-id lxqt-runner
 # bindsym $mod+space exec --no-startup-id rofi -show run
@@ -110,6 +110,7 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
+#set $ws1 "1"
 set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
@@ -179,7 +180,7 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-bindsym $mod+e exec nautilus
+
 
 
 # Start i3bar to display a workspace bar (plus the system information i3status
@@ -188,28 +189,60 @@ bindsym $mod+e exec nautilus
         #                status_command i3status
         #        }
 
-exec xrandr -s 1680x1050
 
-#exec polybar example &
-exec bash ~/.config/polybar/launch.sh --shades
 
-#Gaps
 
-# Set inner/outer gaps 
-gaps inner 6
-gaps outer 3
 
-for_window [class="^.*"] border pixel 0
-
-exec nitrogen --restore &
+################## startup config ######################
 
 exec compton &
+exec xrandr -s 1680x1050 &
+exec bash ~/.config/polybar/launch.sh --shades
 
-#run Chrimium with mod+shitft+x
+############## app-launch shortcuts ###############
+
 bindsym $mod+shift+x exec chromium
+bindsym $mod+e exec nautilus
 
-#set wallpaper from images in the ~/.wallpaper folder
+################## wallpaper ######################
+
 exec sleep 3 && feh --bg-fill --randomize .wallpaper
+#exec nitrogen --restore &
 
-#start shutdown manager in floating mode
+################## screenshots ####################
+
+bindsym --release Print exec "scrot -m '/home/user/Bilder/screenshots/%s_%H%M_%d.%m.%Y_$wx$h.png'"
+
+################## yad - floting ##################
+
 for_window [class="Yad" instance="yad"] floating enable
+
+#################### i3-gaps ######################
+
+#for_window [class=".*"] border pixel 2 #*
+for_window [class="^.*"] border pixel 0
+gaps inner 10
+gaps outer 5
+#gaps horizontal 2
+
+################### i3-radius #####################
+
+smart_borders on
+smart_borders no_gaps
+border_radius 9
+
+######## open apps on specific workspaces #########
+
+assign [class="(?i)xfce4-terminal"]     		        $ws1
+assign [class="(?i)chromium"]           		        $ws2
+assign [class="(?i)code"]               		        $ws3
+
+############## open apps on startup### ############
+
+exec xfce4-terminal
+exec chromium
+exec code
+exec --no-startup-id bitwarden
+
+
+
