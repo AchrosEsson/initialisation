@@ -158,7 +158,7 @@ echo "Möchtest du i3 Window Manager installieren?"
 echo $'\n'
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) (. ./$absolutepath/Scripts/i3/i3wm.sh); break;;
+        Yes ) (. .$absolutepath/Scripts/i3/i3wm.sh); break;;
         No ) break;;
     esac
 done
