@@ -74,6 +74,7 @@ dldir="~/.config/"
 echo $'\n'
 echo 'Kopiere Tmux-Konfiguration'
 echo $'\n'
+echo $'\n'
 echo 'Erstelle ~/Scripts'
 echo $'\n'
 
