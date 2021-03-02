@@ -1,0 +1,215 @@
+#!/bin/bash
+
+#### Bash-Script zur installation von i3-Gaps ####
+
+#### Deffiniere Variable "$absolutepath3" ####
+
+absolutepath3="$(cd "$(dirname "$1")"; pwd -P)/$(basename "$1")"
+
+echo $'\n'
+echo 'Installiere i3 Gaps - Rounded Corners'
+echo $'\n'
+
+sleep 2
+
+
+
+echo $'\n'
+echo "Mit welchem Konto möchtest du i3 nutzen?"
+echo $'\n'
+
+#### Deffiniere Variable "$user" ####
+
+cd /home && select d in */; do test -n "$d" && break; echo ">>> Invalid Selection"; done
+cd "$d" && user=$(pwd)
+
+echo $'\n'
+echo "Du hast folgendes Verzeichnis gewählt:"
+echo $'\n'
+
+echo $user
+
+sleep 2
+
+
+
+echo $'\n'
+echo 'installiere i3'
+#echo $'\n'
+#apt-get install -y  i3 i3-wm
+
+
+
+echo $'\n'
+echo 'Klone i3 Repository...'
+echo $'\n'
+
+git clone https://github.com/maestrogerardo/i3-gaps-deb.git
+
+#### Deffiniere Variable "$absolutepath1" ####
+
+absolutepath1="$(cd "$(dirname "$1")"; pwd -P)/$(basename "$1")"
+
+cd $absolutepath1/i3-gaps-deb
+
+(. ./i3-gaps-deb)
+
+
+
+echo $'\n'
+echo 'Klone i3-radius Repository...'
+echo $'\n'
+
+git clone https://github.com/terroo/i3-radius
+
+echo $'\n'
+echo 'Verschiebe "/usr/bin/i3" zu "/usr/bin/i3_original"...'
+echo $'\n'
+
+mv "$(which i3)" "$(which i3)_original"
+
+
+
+echo $'\n'
+echo 'Erstelle Binaries...'
+echo $'\n'
+
+#### Deffiniere Variable "$absolutepath2" ####
+
+absolutepath2="$(cd "$(dirname "$1")"; pwd -P)/$(basename "$1")"
+
+cd $absolutepath2/i3-radius && sh build.sh
+
+
+
+echo $'\n'
+echo 'Installiere essentials...'
+echo $'\n'
+
+sleep 2
+
+echo $'\n'
+echo 'installiere Polybar'
+echo $'\n'
+apt-get install -y polybar
+
+echo $'\n'
+echo 'installiere Nitrogen'
+echo $'\n'
+apt-get install -y nitrogen
+
+echo $'\n'
+echo 'installiere Feh'
+echo $'\n'
+apt-get install -y feh
+
+echo $'\n'
+echo 'installiere Rofi'
+echo $'\n'
+apt-get install -y rofi
+
+echo $'\n'
+echo 'installiere Compton'
+echo $'\n'
+apt-get install -y compton
+
+echo $'\n'
+echo 'installiere Xfce4-Terminal'
+echo $'\n'
+apt-get install -y xfce4-terminal
+
+echo $'\n'
+echo 'installiere Nautilus'
+echo $'\n'
+apt-get install -y nautilus
+
+echo $'\n'
+echo 'installiere Hack-Font'
+echo $'\n'
+apt-get install -y fonts-hack fonts-hack-otf fonts-hack-ttf fonts-hack-web 
+
+echo $'\n'
+echo 'installiere Theming-Tools'
+echo $'\n'
+apt-get install -y lxappearance gtk-chtheme qt4-qtconfig
+
+
+
+echo $'\n'
+echo 'installiere Powerline Fonts'
+echo $'\n'
+git clone https://github.com/powerline/fonts.git
+cd $absolutepath3'fonts'
+(. ./install.sh)
+
+
+echo $'\n'
+echo 'Kopiere i3-config...'
+echo $'\n'
+
+
+
+DIR="$user/.config/i3/"
+if [ -d "$DIR" ]; then
+  ### Take action if $DIR exists ###
+  echo "Der Ordner ${DIR} exestiert bereits..."
+else
+  ###  Control will jump here if $DIR does NOT exists ###
+  mkdir ${DIR}
+  :
+fi
+
+cp -r "$absolutepath3/Scripts/i3/config" "$user/.config/i3/config"
+
+sleep 2
+
+echo $'\n'
+echo 'Kopiere polybar-config...'
+echo $'\n'
+
+
+
+
+DIR="$user/.config/polybar/"
+if [ -d "$DIR" ]; then
+  ### Take action if $DIR exists ###
+  echo "Der Ordner ${DIR} exestiert bereits..."
+else
+  ###  Control will jump here if $DIR does NOT exists ###
+  mkdir ${DIR}
+  :
+fi
+
+
+
+cp -r "$absolutepath3/Scripts/polybar/" "$user/.config/polybar/"
+
+sleep 2
+
+echo $'\n'
+echo 'Kopiere rofi-config...'
+echo $'\n'
+
+DIR="$user/.config/rofi/"
+if [ -d "$DIR" ]; then
+  ### Take action if $DIR exists ###
+  echo "Der Ordner ${DIR} exestiert bereits..."
+else
+  ###  Control will jump here if $DIR does NOT exists ###
+  mkdir ${DIR}
+  :
+fi
+
+cp -r "$absolutepath3/Scripts/rofi/config.rasi" "$user/.config/rofi/config.rasi"
+
+sleep 2
+
+echo $'\n'
+echo 'i3 wurde erfolgreich installiert, kehre zurück...'
+echo $'\n'
+
+sleep 3
+
+exit
+
+
