@@ -124,3 +124,41 @@ source $ZSH/oh-my-zsh.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+
+
+
+#### CUSTOM ENTRIES #### 
+
+# aliases:
+
+#Youtube-dl
+
+#alias mp3="youtube-dl -x --audio-format mp3"
+alias mp3="youtube-dl -x --audio-format mp3 --continue --ignore-errors --no-overwrites" 
+alias dl="youtube-dl"
+
+#my-tmux
+
+alias my-tmux="./Scripts/my-tmux"
+
+#SSH-Verbindungen
+
+alias qnap="ssh admin@192.168.178.100"
+alias pihole="ssh pihole@192.168.178.102"
+alias vpnuser="ssh vpnuser@192.168.178.102"
+alias user="ssh user@192.168.178.102"
+alias debian="ssh user@192.168.178.103"
+alias zabbix="ssh zabbix@192.168.178.103"
+alias ubuntuserver2="ssh user@192.168.178.111"
+alias pi="ssh pi@192.168.178.69"
+
+#Streams & URLs
+
+alias 1live="vlc --intf dummy https://wdr-1live-live.icecastssl.wdr.de/wdr/1live/live/mp3/128/stream.mp3"
+alias qmusic="vlc --intf dummy https://icecast-qmusicnl-cdp.triple-it.nl/Qmusic_nl_live_96.mp3"
+alias stubru="vlc --intf dummy http://icecast.vrtcdn.be/stubru-high.mp3 "
+
+#auto-exec
+
+
