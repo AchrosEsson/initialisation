@@ -12,8 +12,9 @@ export const BaseStyles = /* css */ `
   position: fixed;
   top: 0;
   display: flex;
+  margin: 0px;
   align-items: center;
-  padding: 7px 7px;
+  padding: 8px 7px;
   box-sizing: border-box;
   color: white;
   font-size: 14px;
@@ -22,7 +23,7 @@ export const BaseStyles = /* css */ `
 .simple-bar--process {
   left: 0;
   width: 100%;
-  height: 39px;
+  height: 46px;
   background-color: ${Theme.background};
   box-shadow: ${Theme.lightShadow};
   z-index: 0;
@@ -287,7 +288,7 @@ export const SpacesStyles = /* css */ `
   display: flex;
   align-items: center;
   margin-right: 9px;
-  padding: 2px 13px;
+  padding: 5px 13px;
   background-color: ${Theme.workspace};
   border-radius: 20px;
   border: 1px solid transparent;
@@ -492,12 +493,13 @@ export const SettingsStyles = /* css */ `
   left: calc(50% - 250px);
   top: 38px;
   width: 500px;
+  margin-top: 28px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   padding: 20px;
-  background-color: ${Theme.main};
-  border-radius: 4px;
+  background-color: ${Theme.background};
+  border-radius: 7px;
   box-shadow: ${Theme.lightShadow};
   opacity: 0;
   transform: translate(0, -50px) scale(0.8);
@@ -795,7 +797,7 @@ export const MicStyles = /* css */ `
     background-color: ${Theme.workspace};
     display: flex;
     align-items: center;
-    padding: 3px 11px;
+    padding: 6px 1px;
     border-radius: 20px;
     cursor: pointer;
     user-select: none;
