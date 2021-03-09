@@ -173,9 +173,9 @@ else
   :
 fi
 
-cp -r $absolutepath3\polybar-themes/wallpapers/ $user\.wallpaper/
+cp -r $absolutepath3\polybar-themes/wallpapers/ $user/.wallpaper/
 
-chmod -R 777 $user\.wallpaper/
+chmod -R 777 $user/.wallpaper/
 
 echo $'\n'
 echo 'Kopiere i3-config...'

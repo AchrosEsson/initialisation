@@ -109,6 +109,12 @@ sleep 2
 apt-get install -y gnupg
 
 echo $'\n'
+echo 'installiere Debian Schlüsselbund'
+echo $'\n'
+sleep 2
+apt-get install -y debian-keyring debian-archive-keyring
+
+echo $'\n'
 echo 'installiere Build-Tools'
 echo $'\n'
 sleep 2
