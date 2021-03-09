@@ -256,6 +256,22 @@ select yn in "Yes" "No"; do
     esac
 done
 
+echo $'\n'
+echo 'Erstelle ~/Git...'
+echo $'\n'
+
+DIR="$user/Git/"
+if [ -d "$DIR" ]; then
+  ### Take action if $DIR exists ###
+  echo "Der Ordner ${DIR} exestiert bereits..."
+else
+  ###  Control will jump here if $DIR does NOT exists ###
+  mkdir ${DIR}
+  :
+fi
+
+chmod 777 $user/Git/
+
 
 
 echo $'\n'
@@ -272,7 +288,7 @@ else
   :
 fi
 
-chmod +x $user/.wallpaper/
+chmod 777 $user/.wallpaper/
 
 echo $'\n'
 echo 'Tipp: lege Bilder in ~/.wallpaper ab um sie als Hintergrund zu übernehmen.'
