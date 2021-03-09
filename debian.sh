@@ -10,6 +10,11 @@ fi
 echo $'\n'
 echo 'initialisiere System...'
 echo $'\n'
+
+#### Deffiniere Variable "$absolutepath" ####
+
+absolutepath="$(cd "$(dirname "$1")"; pwd -P)/$(basename "$1")"
+
 sleep 2
 
 echo $'\n'
@@ -26,6 +31,7 @@ echo "Du hast folgendes Verzeichnis gewählt:"
 echo $'\n'
 
 echo $user
+echo $'\n'
 
 sleep 2
 
@@ -46,7 +52,7 @@ read git_user
 #### GIT ####
 
 echo $'\n'
-echo 'installiere Git'
+echo 'initialisiere Git...'
 echo $'\n'
 sleep 2
 
@@ -60,15 +66,14 @@ git config --global core.editor "nano"
 
 
 
-#### Erstelle "absolutepath" Variable ####
-
-absolutepath="$(cd "$(dirname "$1")"; pwd -P)/$(basename "$1")"
-
-
-
 #### Rufe software.sh auf ####
 
-(. .$absolutepath/Scripts/Debian/software.sh)
+echo $'\n'
+echo 'Rufe software.sh auf...'
+echo $'\n'
+sleep 1
+
+(. $absolutepath'Scripts/Debian/software.sh')
 
 
 
@@ -78,16 +83,17 @@ echo $'\n'
 echo 'Erstelle ~/.config'
 echo $'\n'
 
-DIR="$user'.config/'"
+DIR="$user/.config/"
 if [ -d "$DIR" ]; then
   ### Take action if $DIR exists ###
   echo "Der Ordner ${DIR} exestiert bereits..."
 else
   ###  Control will jump here if $DIR does NOT exists ###
   mkdir ${DIR}
-  exit 1
+  :
 fi
 
+chmod -R 777 $user/.config/
 
 
 #### Kopiere tmux.conf ####
@@ -98,21 +104,24 @@ echo $'\n'
 echo 'Erstelle ~/Scripts'
 echo $'\n'
 
-DIR="$user'Scripts/'"
+DIR="$user/Scripts/"
 if [ -d "$DIR" ]; then
   ### Take action if $DIR exists ###
   echo "Der Ordner ${DIR} exestiert bereits..."
 else
   ###  Control will jump here if $DIR does NOT exists ###
   mkdir ${DIR}
-  exit 1
+  :
 fi
 
-cp -r $absolutepath/Scripts/tmux/tmux.conf $user'.tmux.conf'
+chmod -R 777 $user/Scripts/
 
-cp -r $absolutepath/Scripts/tmux/my-tmux $user'Scripts/my-tmux'
+cp -r $absolutepath/Scripts/tmux/tmux.conf $user/.tmux.conf
+cp -r $absolutepath/Scripts/tmux/my-tmux $user/Scripts/my-tmux
 
-chmod +x ~/Scripts/my-tmux
+chmod -R 777 $user/.tmux.conf
+chmod -R 777 $user/Scripts/my-tmux
+chmod +x $user/Scripts/my-tmux
 
 echo $'\n'
 echo 'Erledigt'
@@ -124,15 +133,57 @@ sleep 2
 #### Kopiere .zshrc ####
 
 echo $'\n'
-echo 'Kopiere Z-Shell-Konfiguration'
+echo 'Kopiere Z-Shell-Konfiguration...'
 echo $'\n'
 sleep 2
 
-cp -r $absolutepath/Scripts/zsh/zshrc $user'.zshrc'
+cp -r $absolutepath/Scripts/zsh/zshrc $user/.zshrc
+
+chmod -R 777 $user/.zshrc
 
 sleep 2
 
 
+
+#### Installiere Oh-my-Zsh ####
+
+echo $'\n'
+echo 'Installiere Oh-my-Zsh...'
+echo $'\n'
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+sleep 2
+
+
+
+#### Installiere Powerlevel10k ####
+
+echo $'\n'
+echo 'Installiere Powerlevel10k...'
+echo $'\n'
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+sleep 2
+
+
+
+#### Installiere Gogh Color Scheme ####
+
+echo $'\n'
+echo 'Installiere Gogh Color Scheme'
+echo $'\n'
+bash -c  "$(wget -qO- https://git.io/vQgMr)" 
+sleep 2
+
+#### Installiere Gogh Color Scheme ####
+
+echo $'\n'
+echo 'Installiere ColorLs'
+echo $'\n'
+cd $absolutepath
+git clone https://github.com/athityakumar/colorls.git
+cd $absolutepath/colorls
+gem install colorls
+
+sleep 2 
 
 #### Kopiere Polybar Konfiguarion ####
 
@@ -141,7 +192,11 @@ echo 'Kopiere Polybar Konfiguarion'
 echo $'\n'
 sleep 2
 
-cp -r $absolutepath/Scripts/polybar/shades $user'.config/'
+
+
+cp -r $absolutepath/Scripts/polybar/shades/ $user/.config/
+
+chmod -R 777 $user/.config/
 
 sleep 2
 
@@ -182,7 +237,7 @@ echo "Möchtest du i3 Window Manager installieren?"
 echo $'\n'
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) (. ./$absolutepath/Scripts/i3/i3wm.sh); break;;
+        Yes ) (. $absolutepath'Scripts/i3/i3wm.sh'); break;;
         No ) break;;
     esac
 done
@@ -196,22 +251,44 @@ echo "Möchtest du eine Backup-location bestimmen?"
 echo $'\n'
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) (. .$absolutepath/Scripts/main/backup.sh); break;;
+        Yes ) (. $absolutepath'Scripts/main/backup.sh'); break;;
         No ) break;;
     esac
 done
+
+
+
+echo $'\n'
+echo 'Erstelle ~/.wallpaper...'
+echo $'\n'
+
+DIR="$user/.wallpaper/"
+if [ -d "$DIR" ]; then
+  ### Take action if $DIR exists ###
+  echo "Der Ordner ${DIR} exestiert bereits..."
+else
+  ###  Control will jump here if $DIR does NOT exists ###
+  mkdir ${DIR}
+  :
+fi
+
+chmod +x $user/.wallpaper/
+
+echo $'\n'
+echo 'Tipp: lege Bilder in ~/.wallpaper ab um sie als Hintergrund zu übernehmen.'
+echo $'\n'
+
+sleep 5
+
 
 
 echo $'\n'
 echo 'Aufräumen...'
 echo $'\n'
 
-mkdir ~/.wallpaper
 apt update -y
 apt-get install -f
 apt auto-remove
-echo "source /etc/profile" >> ~/.bashrc
-echo "source /etc/profile" >> ~/.zshrc
 updatedb
 
 

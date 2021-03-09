@@ -115,6 +115,12 @@ sleep 2
 apt-get install -y build-essential gcc make cmake flex module-assistant
 
 echo $'\n'
+echo 'installiere Ruby'
+echo $'\n'
+sleep 2
+apt-get install -y ruby ruby-dev
+
+echo $'\n'
 echo 'installiere Z-Shell'
 echo $'\n'
 sleep 2
@@ -137,6 +143,12 @@ echo 'installiere Ranger'
 echo $'\n'
 sleep 2
 apt-get install -y ranger
+
+echo $'\n'
+echo 'installiere VLC'
+echo $'\n'
+sleep 2
+apt-get install -y vlc
 
 echo $'\n'
 echo 'installiere Snap'

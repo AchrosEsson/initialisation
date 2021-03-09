@@ -2,6 +2,10 @@
 
 #### Bash-Script zur installation von i3-Gaps ####
 
+#### Deffiniere Variable "$absolutepath3" ####
+
+absolutepath3="$(cd "$(dirname "$1")"; pwd -P)/$(basename "$1")"
+
 echo $'\n'
 echo 'Installiere i3 Gaps - Rounded Corners'
 echo $'\n'
@@ -50,30 +54,6 @@ cd $absolutepath1/i3-gaps-deb
 
 (. ./i3-gaps-deb)
 
-
-
-echo $'\n'
-echo 'Klone i3-radius Repository...'
-echo $'\n'
-
-git clone https://github.com/terroo/i3-radius
-
-echo $'\n'
-echo 'Verschiebe "/usr/bin/i3" zu "/usr/bin/i3_original"...'
-echo $'\n'
-
-mv "$(which i3)" "$(which i3)_original"
-
-
-
-echo $'\n'
-echo 'Erstelle Binaries...'
-echo $'\n'
-
-cd $absolutepath1/i3-radius && sh build.sh
-
-
-
 echo $'\n'
 echo 'Installiere essentials...'
 echo $'\n'
@@ -116,6 +96,16 @@ echo $'\n'
 apt-get install -y nautilus
 
 echo $'\n'
+echo 'installiere Scrot'
+echo $'\n'
+apt-get install -y scrot
+
+echo $'\n'
+echo 'installiere yad'
+echo $'\n'
+apt-get install -y yad
+
+echo $'\n'
 echo 'installiere Hack-Font'
 echo $'\n'
 apt-get install -y fonts-hack fonts-hack-otf fonts-hack-ttf fonts-hack-web 
@@ -125,36 +115,161 @@ echo 'installiere Theming-Tools'
 echo $'\n'
 apt-get install -y lxappearance gtk-chtheme qt4-qtconfig
 
+
+
+
+#### Deffiniere Variable "$username" ####
+
+OPTIONS=$(getent passwd {1000..60000} | cut -d: -f1) 
+
+echo $'\n'
+PS3="Bitte wähle deinen Benutzer aus: "
+
+
+select username in $OPTIONS
+
+do
+        echo $'\n'
+        echo "Gewähler Benutzer: $username"
+        echo $'\n'
+
+        break
+done
+
+sleep 2
+
+
+
+
 echo $'\n'
 echo 'installiere Powerline Fonts'
 echo $'\n'
+cd $absolutepath3
 git clone https://github.com/powerline/fonts.git
-cd $absolutepath1/fonts
-(. ./install.sh)
+cd $absolutepath3'fonts'
+su $username -c '(. ./install.sh)'
+
+
+echo $'\n'
+echo 'installiere Polybar-Theme...'
+echo $'\n'
+cd $absolutepath3
+git clone https://github.com/adi1090x/polybar-themes.git
+cd $absolutepath3'polybar-themes'
+su $username -c '(. ./setup.sh)'
+
+
+echo $'\n'
+echo 'Kopiere Wallpaper...'
+echo $'\n'
+
+DIR="$user/.wallpaper/"
+if [ -d "$DIR" ]; then
+  ### Take action if $DIR exists ###
+  echo "Der Ordner ${DIR} exestiert bereits..."
+else
+  ###  Control will jump here if $DIR does NOT exists ###
+  mkdir ${DIR}
+  :
+fi
+
+cp -r $absolutepath3\polybar-themes/wallpapers/ $user\.wallpaper/
+
+chmod -R 777 $user\.wallpaper/
 
 echo $'\n'
 echo 'Kopiere i3-config...'
 echo $'\n'
-mkdir ~/.config/i3/
-cp -r $absolutepath1/Scripts/i3/config $user'.config/i3/config'
+
+
+
+DIR="$user/.config/i3/"
+if [ -d "$DIR" ]; then
+  ### Take action if $DIR exists ###
+  echo "Der Ordner ${DIR} exestiert bereits..."
+else
+  ###  Control will jump here if $DIR does NOT exists ###
+  mkdir ${DIR}
+  :
+fi
+
+cp -r "$absolutepath3/Scripts/i3/config" "$user/.config/i3/config"
+
+chmod -R 777 $user/.config/i3/
 
 sleep 2
 
 echo $'\n'
 echo 'Kopiere polybar-config...'
 echo $'\n'
-mkdir ~/.config/polybar/
-cp -r $absolutepath1/Scripts/i3/polybar-config $user'.config/polybar/config'
+
+
+
+
+DIR="$user/.config/polybar/"
+if [ -d "$DIR" ]; then
+  ### Take action if $DIR exists ###
+  echo "Der Ordner ${DIR} exestiert bereits..."
+else
+  ###  Control will jump here if $DIR does NOT exists ###
+  mkdir ${DIR}
+  :
+fi
+
+chmod -R 777 $user/.config/polybar/
+
+cp -r $absolutepath3\Scripts/polybar/* "$user/.config/polybar/"
+
+chmod +x $user/.config/polybar/shades/scripts/search.sh
+chmod +x $user/.config/polybar/shades/scripts/powermenu.sh
 
 sleep 2
 
 echo $'\n'
 echo 'Kopiere rofi-config...'
 echo $'\n'
-mkdir ~/.config/rofi/
-cp -r $absolutepath1/Scripts/rofi/config.rasi $user'.config/rofi/config.rasi'
+
+DIR="$user/.config/rofi/"
+if [ -d "$DIR" ]; then
+  ### Take action if $DIR exists ###
+  echo "Der Ordner ${DIR} exestiert bereits..."
+else
+  ###  Control will jump here if $DIR does NOT exists ###
+  mkdir ${DIR}
+  :
+fi
+
+cp -r "$absolutepath3/Scripts/rofi/config.rasi" "$user/.config/rofi/config.rasi"
+
+chmod -R 777 $user/.config/rofi/
+
+chmod -R 777 $user/.config
 
 sleep 2
+
+DIR="$user/Bilder/Screenshots/"
+if [ -d "$DIR" ]; then
+  ### Take action if $DIR exists ###
+  echo "Der Ordner ${DIR} exestiert bereits..."
+else
+  ###  Control will jump here if $DIR does NOT exists ###
+  mkdir ${DIR}
+  :
+fi
+
+chmod -R 777 $user/Bilder/Screenshots/
+
+DIR="$user/Pictures/Screenshots/"
+if [ -d "$DIR" ]; then
+  ### Take action if $DIR exists ###
+  echo "Der Ordner ${DIR} exestiert bereits..."
+else
+  ###  Control will jump here if $DIR does NOT exists ###
+  mkdir ${DIR}
+  :
+fi
+
+chmod -R 777 $user/Pictures/Screenshots/
 
 echo $'\n'
 echo 'i3 wurde erfolgreich installiert, kehre zurück...'
